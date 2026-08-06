@@ -1,8 +1,7 @@
 (function () {
   "use strict";
 
-  // TODO: nach dem Google-Cloud-Setup hier die OAuth-Client-ID eintragen.
-  var CLIENT_ID = "YOUR_CLIENT_ID_HERE.apps.googleusercontent.com";
+  var CLIENT_ID = "860179596174-dt5vdfpfddo8aillphf36unj4b5c647p.apps.googleusercontent.com";
 
   var CATS = [
     {
