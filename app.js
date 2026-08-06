@@ -108,6 +108,15 @@
     return location.origin + location.pathname + "?room=" + encodeURIComponent(id);
   }
 
+  function renderQrCode(text) {
+    var box = document.getElementById("qr-box");
+    if (!box || typeof qrcode !== "function") return;
+    var qr = qrcode(0, "M");
+    qr.addData(text);
+    qr.make();
+    box.insertAdjacentHTML("beforeend", qr.createImgTag(4, 8));
+  }
+
   // ---------- Drive-backed actions ----------
   function withBusy(promise) {
     busy = true;
@@ -381,11 +390,14 @@
       '<p class="muted" style="margin-top:6px;">Teile den Link, damit alle beitreten können.</p>' +
       '<div class="room-box"><code>' + esc(roomLink(fileId)) + '</code>' +
       '<button type="button" class="btn btn-ghost" id="copy-link-btn">Link kopieren</button></div>' +
+      '<div class="qr-box" id="qr-box"><span class="muted" style="font-size:0.82rem;">Oder QR-Code scannen</span></div>' +
       joinFormHtml +
       '<ul class="player-list">' + listHtml + '</ul>' +
       (localState.players.length < 2 ? '<p class="setup-hint muted">Mindestens 2 Spieler:innen nötig, bevor gestartet werden kann.</p>' : '') +
       '<div class="setup-actions">' + startBtnHtml + '</div>' +
       '</div>';
+
+    renderQrCode(roomLink(fileId));
 
     document.getElementById("copy-link-btn").addEventListener("click", function () {
       var link = roomLink(fileId);
