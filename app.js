@@ -238,6 +238,10 @@
   function poll() {
     DriveStore.readState(fileId).then(function (s) {
       setStatus("");
+      // Skip re-rendering when nothing actually changed, so a full
+      // innerHTML rebuild doesn't wipe out text someone is mid-typing
+      // (e.g. their name in the lobby join form) or steal focus.
+      if (localState && s.version === localState.version) return;
       localState = s;
       render();
     }).catch(function (err) {
