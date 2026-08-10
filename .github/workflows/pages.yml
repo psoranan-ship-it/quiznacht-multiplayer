@@ -23,6 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Cache-bust script tags
+        run: sed -i "s/__CACHE_BUST__/${{ github.sha }}/g" index.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
